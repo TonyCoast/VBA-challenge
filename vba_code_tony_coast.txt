@@ -1,0 +1,44 @@
+Sub stock_summary()
+
+    Dim Ticker As String
+    Dim Year_Change As Double
+    Dim Percent_Change As Double
+    Dim Total_Volume As Integer
+    
+    Yearly_Change = 0
+    Percent_Change = 0
+    Total_Volume = 0
+    
+    Dim Summary_Table_Row As Integer
+    Summary_Table_Row = 2
+    
+    LastRow = Cells(Rows.Count, 1).End(xlUp).Row
+    
+    Cells(1, 9).Value = "Ticker"
+    Cells(1, 10).Value = "Yearly Change"
+    Cells(1, 11).Value = "Percent Change"
+    Cells(1, 12).Value = "Total Stock Volume"
+    Sheet1.Columns("I:M").AutoFit
+    
+    For i = 2 To LastRow
+        
+        If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+            Ticker = Cells(i, 1).Value
+            Total_Volume = Total_Volume + Cells(i, 7).Value
+            
+            Range("I" & Summary_Table_Row).Value = Ticker
+            Range("L" & Summary_Table_Row).Value = Total_Volume
+            
+            Summary_Table_Row = Summary_Table_Row + 1
+            
+            Total_Volume = 0
+            
+        Else
+        
+            Total_Volume = Total_Volume + Cells(i, 7).Value
+        
+        End If
+        
+    Next i
+    
+End Sub
